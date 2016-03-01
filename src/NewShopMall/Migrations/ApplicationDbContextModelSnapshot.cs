@@ -3,9 +3,10 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using NewShopMall.DBContexts;
 
-namespace NewShopMall.Migrations
+using ShopMall.DBAccess.DBContexts;
+
+namespace ShopMall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

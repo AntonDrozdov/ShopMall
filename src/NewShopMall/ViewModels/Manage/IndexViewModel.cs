@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 
-namespace NewShopMall.ViewModels.Manage
+namespace ShopMall.ViewModels.Manage
 {
     public class IndexViewModel
     {

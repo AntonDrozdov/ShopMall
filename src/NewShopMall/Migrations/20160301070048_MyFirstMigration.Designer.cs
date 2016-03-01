@@ -3,9 +3,9 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using NewShopMall.DBContexts;
+using ShopMall.DBAccess.DBContexts;
 
-namespace NewShopMall.Migrations
+namespace ShopMall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20160301070048_MyFirstMigration")]

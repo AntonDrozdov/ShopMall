@@ -5,13 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 
-using NewShopMall.Models.AccountDBModels;
+using ShopMall.Models.AccountDBModels;
+using ShopMall.Models.ShopMallDBModels;
 
 
-namespace NewShopMall.DBContexts
+namespace ShopMall.DBAccess.DBContexts
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        DbSet<Shop> Shops { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

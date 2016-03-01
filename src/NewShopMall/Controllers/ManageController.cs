@@ -7,13 +7,13 @@ using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
-using NewShopMall.Models;
-using NewShopMall.Services;
-using NewShopMall.ViewModels.Manage;
+using ShopMall.Models;
+using ShopMall.Services;
+using ShopMall.ViewModels.Manage;
 
-using NewShopMall.Models.AccountDBModels;
+using ShopMall.Models.AccountDBModels;
 
-namespace NewShopMall.Controllers
+namespace ShopMall.Controllers
 {
     [Authorize]
     public class ManageController : Controller

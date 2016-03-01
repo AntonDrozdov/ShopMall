@@ -9,13 +9,13 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NewShopMall.Models;
-using NewShopMall.Services;
+using ShopMall.Models;
+using ShopMall.Services;
 
-using NewShopMall.DBContexts;
-using NewShopMall.Models.AccountDBModels;
+using ShopMall.DBAccess.DBContexts;
+using ShopMall.Models.AccountDBModels;
 
-namespace NewShopMall
+namespace ShopMall
 {
     public class Startup
     {
@@ -53,10 +53,7 @@ namespace NewShopMall
                 .AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<ShopMallDBContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

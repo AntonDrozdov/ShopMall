@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
 
-namespace NewShopMall.Migrations
+namespace ShopMall.Migrations
 {
     public partial class FirstMigration : Migration
     {

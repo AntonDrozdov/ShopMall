@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace NewShopMall.Models.AccountDBModels
+namespace ShopMall.Models.AccountDBModels
 {
     public class ApplicationUser : IdentityUser
     {

@@ -9,13 +9,14 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Logging;
-using NewShopMall.Models;
-using NewShopMall.Services;
-using NewShopMall.ViewModels.Account;
 
-using NewShopMall.Models.AccountDBModels;
+using ShopMall.Models;
+using ShopMall.Services;
+using ShopMall.ViewModels.Account;
 
-namespace NewShopMall.Controllers
+using ShopMall.Models.AccountDBModels;
+
+namespace ShopMall.Controllers
 {
     [Authorize]
     public class AccountController : Controller

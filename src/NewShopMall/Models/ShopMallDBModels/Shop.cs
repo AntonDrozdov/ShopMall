@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NewShopMall.Models.ShopMallDBModels
+namespace ShopMall.Models.ShopMallDBModels
 {
     public class Shop
     {

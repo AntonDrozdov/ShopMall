@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NewShopMall.Services
+namespace ShopMall.Services
 {
     public interface ISmsSender
     {

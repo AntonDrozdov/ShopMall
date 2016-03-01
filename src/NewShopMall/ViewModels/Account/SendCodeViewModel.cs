@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc.Rendering;
 
-namespace NewShopMall.ViewModels.Account
+namespace ShopMall.ViewModels.Account
 {
     public class SendCodeViewModel
     {
