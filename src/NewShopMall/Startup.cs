@@ -14,6 +14,7 @@ using ShopMall.Services;
 
 using ShopMall.DBAccess.DBContexts;
 using ShopMall.Models.AccountDBModels;
+using ShopMall.ForTests;
 
 namespace ShopMall
 {
@@ -113,6 +114,9 @@ namespace ShopMall
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // вызываем инициализатор
+            SampleData.Initialize(app.ApplicationServices);
         }
 
         // Entry point for the application.

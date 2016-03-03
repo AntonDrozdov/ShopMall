@@ -7,7 +7,7 @@ namespace ShopMall.Models.ShopMallDBModels
 {
     public class Shop
     {
-        int Id { get; set; }
-        string Title { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }

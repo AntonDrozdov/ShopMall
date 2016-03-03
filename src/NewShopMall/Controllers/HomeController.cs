@@ -4,14 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 
+using ShopMall.Models.ShopMallDBModels;
+using ShopMall.DBAccess.DBContexts;
+
 
 namespace ShopMall.Controllers
 {
     public class HomeController : Controller
     {
+        ApplicationDbContext ctx;
+        public HomeController(ApplicationDbContext _ctx) {
+            ctx = _ctx;
+        }
         public IActionResult Index()
         {
-            
+            ViewBag.Shops = ctx.Shops.ToList();
+ 
             return View();
         }
 
