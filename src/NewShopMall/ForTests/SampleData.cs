@@ -17,6 +17,7 @@ namespace ShopMall.ForTests
         {
             var context = serviceProvider.GetService<ApplicationDbContext>();
 
+
             if (!context.Shops.Any())
             {
                 context.Shops.AddRange(
