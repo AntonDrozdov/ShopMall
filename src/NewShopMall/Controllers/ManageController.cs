@@ -38,10 +38,15 @@ namespace ShopMall.Controllers
             _logger = loggerFactory.CreateLogger<ManageController>();
         }
 
-        //
-        // GET: /Manage/Index
         [HttpGet]
-        public async Task<IActionResult> Index(ManageMessageId? message = null)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: /Manage/EditProfile
+        [HttpGet]
+        public async Task<IActionResult> EditProfile(ManageMessageId? message = null)
         {
             ViewData["StatusMessage"] =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
