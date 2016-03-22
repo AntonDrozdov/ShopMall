@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using ShopMall.Models;
 using ShopMall.Services;
 using ShopMall.ViewModels.Account;
+using ShopMall.DBAccess.Repository.Abstract;
+using ShopMall.Models.ShopMallDBModels;
 
 using ShopMall.Models.AccountDBModels;
 
@@ -26,19 +28,22 @@ namespace ShopMall.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private IRepository _repository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _repository = repository;
         }
 
         //
@@ -107,7 +112,7 @@ namespace ShopMall.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -119,7 +124,14 @@ namespace ShopMall.Controllers
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+
+                    Shop UserShop = new Shop
+                    {
+                        Title = "MyShop",
+                        ApplicationUserId = user.Id
+                    };
+                    _repository.AddUserShop(UserShop);
+                    return RedirectToAction(nameof(ManageController.MyShopMall), "Manage");
                 }
                 AddErrors(result);
             }
@@ -198,7 +210,7 @@ namespace ShopMall.Controllers
         {
             if (User.IsSignedIn())
             {
-                return RedirectToAction(nameof(ManageController.Index), "Manage");
+                return RedirectToAction(nameof(ManageController.MyShopMall), "Manage");
             }
 
             if (ModelState.IsValid)
@@ -461,7 +473,7 @@ namespace ShopMall.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(ManageController.MyShopMall), "Manage");
             }
         }
 

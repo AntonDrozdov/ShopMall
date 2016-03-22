@@ -13,6 +13,8 @@ using ShopMall.Models;
 using ShopMall.Services;
 
 using ShopMall.DBAccess.DBContexts;
+using ShopMall.DBAccess.Repository.Abstract;
+using ShopMall.DBAccess.Repository.Concrete;
 using ShopMall.Models.AccountDBModels;
 using ShopMall.ForTests;
 
@@ -52,7 +54,7 @@ namespace ShopMall
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    options.UseSqlServer(Configuration["Data:ConnectionString"]));
 
 
 
@@ -65,6 +67,7 @@ namespace ShopMall
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

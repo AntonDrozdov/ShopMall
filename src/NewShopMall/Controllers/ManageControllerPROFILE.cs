@@ -16,33 +16,8 @@ using ShopMall.Models.AccountDBModels;
 namespace ShopMall.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public partial class ManageController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
-        private readonly ILogger _logger;
-
-        public ManageController(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager,
-        IEmailSender emailSender,
-        ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _emailSender = emailSender;
-            _smsSender = smsSender;
-            _logger = loggerFactory.CreateLogger<ManageController>();
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         // GET: /Manage/EditProfile
         [HttpGet]
@@ -126,7 +101,7 @@ namespace ShopMall.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation(1, "User enabled two-factor authentication.");
             }
-            return RedirectToAction(nameof(Index), "Manage");
+            return RedirectToAction(nameof(MyShopMall), "Manage");
         }
 
         //
@@ -142,7 +117,7 @@ namespace ShopMall.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation(2, "User disabled two-factor authentication.");
             }
-            return RedirectToAction(nameof(Index), "Manage");
+            return RedirectToAction(nameof(MyShopMall), "Manage");
         }
 
         //
@@ -172,7 +147,7 @@ namespace ShopMall.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.AddPhoneSuccess });
+                    return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.AddPhoneSuccess });
                 }
             }
             // If we got this far, something failed, redisplay the form
@@ -192,10 +167,10 @@ namespace ShopMall.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.RemovePhoneSuccess });
+                    return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.RemovePhoneSuccess });
                 }
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.Error });
         }
 
         //
@@ -224,12 +199,12 @@ namespace ShopMall.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
                 AddErrors(result);
                 return View(model);
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.Error });
         }
 
         //
@@ -258,12 +233,12 @@ namespace ShopMall.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
+                    return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.SetPasswordSuccess });
                 }
                 AddErrors(result);
                 return View(model);
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return RedirectToAction(nameof(MyShopMall), new { Message = ManageMessageId.Error });
         }
 
         //GET: /Manage/ManageLogins

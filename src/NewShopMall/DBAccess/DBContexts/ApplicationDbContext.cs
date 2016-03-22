@@ -14,6 +14,7 @@ namespace ShopMall.DBAccess.DBContexts
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Shop> Shops { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

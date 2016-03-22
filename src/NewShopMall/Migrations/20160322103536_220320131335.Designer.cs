@@ -8,9 +8,10 @@ using ShopMall.DBAccess.DBContexts;
 namespace ShopMall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160322103536_220320131335")]
+    partial class _220320131335
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -130,8 +131,6 @@ namespace ShopMall.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<int?>("ShopId");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("Urladdress");
@@ -155,9 +154,9 @@ namespace ShopMall.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("Title");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
                 });
@@ -194,11 +193,11 @@ namespace ShopMall.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ShopMall.Models.AccountDBModels.ApplicationUser", b =>
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Shop", b =>
                 {
-                    b.HasOne("ShopMall.Models.ShopMallDBModels.Shop")
-                        .WithMany()
-                        .HasForeignKey("ShopId");
+                    b.HasOne("ShopMall.Models.AccountDBModels.ApplicationUser")
+                        .WithOne()
+                        .HasForeignKey("ShopMall.Models.ShopMallDBModels.Shop", "UserId");
                 });
         }
     }
