@@ -57,15 +57,30 @@ namespace ShopMall.DBAccess.Repository.Concrete
 
 
         public IQueryable<Good> ShopGoods(int ShopId) {
-
-
+            //получаем список ид товаров магазина из объектов RelShopGood поля Goods, что есть связующие объекты между таблицей магазинов и таблицей товаров
             List<int> ShopGoodsIds = new List<int>();
             foreach (RelShopGood rsg in ctx.Shops.Where(s => s.Id == ShopId).FirstOrDefault().Goods) {
                 ShopGoodsIds.Add(rsg. GoodId);
             }
 
+            //выбираем из таблицы товаров все, ид которых, содержаться в вышеопределенной коллекции необходимых ид
             return ctx.Goods.Where(g => ShopGoodsIds.Contains(g.Id));
         }
+        public Good CreateShopGood(Good good, Shop shop) {
+            //сналча добавляем новый товар в таблицу
+            ctx.Goods.Add(good);
+            ctx.SaveChanges();
+
+            //теперь создаем обхект связку товар - магазин
+            RelShopGood rsg = new RelShopGood() { Good = good, GoodId = good.Id, Shop = shop, ShopId = shop.Id };
+            //добавляем объект связку в товар
+            good.Shops.Add(rsg);
+            //созраняемся
+            ctx.Entry(good).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return good;
+        }
+
     }
 }
 

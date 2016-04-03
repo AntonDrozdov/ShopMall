@@ -12,6 +12,7 @@ using ShopMall.Services;
 using ShopMall.ViewModels.Manage;
 
 using ShopMall.Models.AccountDBModels;
+using ShopMall.Models.ShopMallDBModels;
 
 namespace ShopMall.Controllers
 {
@@ -42,8 +43,19 @@ namespace ShopMall.Controllers
             return View();
         }
         [HttpPost  ]
-        public IActionResult CreateGood(string Title, string Descritption)
+        public IActionResult CreateGood(CreateGoodViewModel model)
         {
+            if (ModelState.IsValid) {
+                var currentUser = _repository.GetCurrentUser(User.Identity.Name);
+                Shop shop = new Shop();
+                if (currentUser != null)
+                    shop = _repository.GetUserShop(currentUser);
+
+                Good newgood = new Good() { Title = model.Title, Description = model.Description };
+                _repository.CreateShopGood(newgood, shop);
+
+                return RedirectToAction("ManageShopGoods");
+            }
             return RedirectToAction("ManageShopGoods");
         }
 

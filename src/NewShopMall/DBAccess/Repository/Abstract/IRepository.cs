@@ -13,8 +13,9 @@ namespace ShopMall.DBAccess.Repository.Abstract
         IQueryable<Good> ShopGoods(int ShopId);
         ApplicationUser GetCurrentUser(string UserEmail);
         Shop GetUserShop(ApplicationUser User);
-        int AddUserShop(Shop shop); 
+        int AddUserShop(Shop shop);
 
+        Good CreateShopGood(Good good, Shop shop);
         
         
     }

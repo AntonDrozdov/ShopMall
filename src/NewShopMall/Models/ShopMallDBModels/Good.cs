@@ -26,11 +26,11 @@ namespace ShopMall.Models.ShopMallDBModels
         [Required]
         [Range(0, 1000)]
         public int? Amount { get; set; }
-        
+
+        public List<RelShopGood> Shops { get; set; }
         public ICollection<Image> Images { get; set; }
         public ICollection<Discount> Discounts { get; set; }
         public ICollection<Category> Categories { get; set; }
-        public List<RelShopGood> Shops { get; set; }
 
         public Good()
         {

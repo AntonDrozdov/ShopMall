@@ -8,6 +8,7 @@
     <h4>Добавить товар</h4>
     <hr />
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label">Наименование</label>
         <div class="col-md-10">
@@ -15,6 +16,7 @@
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
     </div>
+    
     <div class="form-group">
         <label asp-for="Description" class="col-md-2 control-label">Описание</label>
         <div class="col-md-10">
@@ -22,13 +24,7 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Categories" class="col-md-2 control-label">Категории</label>
-        <div class="col-md-10">
-            <input asp-for="Categories" class="form-control" />
-            <span asp-validation-for="Categories" class="text-danger"></span>
-        </div>
-    </div>
+    
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <button type="submit" class="btn btn-default">Добавить</button>
