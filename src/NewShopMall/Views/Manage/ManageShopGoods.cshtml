@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_AdminShopLayout";
+}
+
+<h2>Goods</h2>
+
+<!--КНОПКА СОЗДАНИЯ ПОЗИЦИИ-->
+<a asp-controller="Manage" asp-action="CreateGood">Новая позиция</a>
+
+<ul>
+    @foreach (var good in ViewBag.Goods)
+    {
+        <li>@good.Title</li>
+    }
+</ul>

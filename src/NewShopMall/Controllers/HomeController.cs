@@ -16,15 +16,15 @@ namespace ShopMall.Controllers
 {
     public class HomeController : Controller
     {
-        IRepository repository;
+        IRepository _repository;
 
-        public HomeController(IRepository _repository) {
-            repository = _repository;
+        public HomeController(IRepository repository) {
+            _repository = repository;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Shops = repository.Shops().ToList();
+            ViewBag.Shops = _repository.Shops().ToList();
             return View();
         }
 

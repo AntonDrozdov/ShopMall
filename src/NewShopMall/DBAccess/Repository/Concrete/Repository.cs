@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.Data.Entity;
 using ShopMall.DBAccess.DBContexts;
 using ShopMall.DBAccess.Repository.Abstract;
 using ShopMall.Models.ShopMallDBModels;
@@ -46,12 +47,24 @@ namespace ShopMall.DBAccess.Repository.Concrete
             return ctx.Users.Where(u => u.Email == UserEmail).FirstOrDefault();
         }
         public Shop GetUserShop(ApplicationUser User) {
-            return ctx.Shops.Where(s => s.ApplicationUserId == User.Id).FirstOrDefault();
+            return ctx.Shops.Where(s => s.ApplicationUserId == User.Id).Include(s => s.Goods).FirstOrDefault();
         }
         public int AddUserShop(Shop shop) {
             ctx.Shops.Add(shop);
             ctx.SaveChanges();
             return shop.Id;
+        }
+
+
+        public IQueryable<Good> ShopGoods(int ShopId) {
+
+
+            List<int> ShopGoodsIds = new List<int>();
+            foreach (RelShopGood rsg in ctx.Shops.Where(s => s.Id == ShopId).FirstOrDefault().Goods) {
+                ShopGoodsIds.Add(rsg. GoodId);
+            }
+
+            return ctx.Goods.Where(g => ShopGoodsIds.Contains(g.Id));
         }
     }
 }

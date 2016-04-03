@@ -20,7 +20,6 @@ namespace ShopMall.Controllers
     [Authorize]
     public partial class ManageController : Controller
     {
-
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;

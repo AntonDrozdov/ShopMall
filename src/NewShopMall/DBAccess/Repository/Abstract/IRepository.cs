@@ -10,9 +10,12 @@ namespace ShopMall.DBAccess.Repository.Abstract
     public interface IRepository
     {
         IQueryable<Shop> Shops();
+        IQueryable<Good> ShopGoods(int ShopId);
         ApplicationUser GetCurrentUser(string UserEmail);
         Shop GetUserShop(ApplicationUser User);
         int AddUserShop(Shop shop); 
+
+        
         
     }
 }

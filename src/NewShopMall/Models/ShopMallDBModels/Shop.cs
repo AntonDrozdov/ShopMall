@@ -13,5 +13,11 @@ namespace ShopMall.Models.ShopMallDBModels
         public string Title { get; set; }
 
         public virtual string ApplicationUserId { get; set; }
+        public List<RelShopGood> Goods {get; set;}
+
+        public Shop() {
+            Goods = new List<RelShopGood>();
+        }
+        
     }
 }
