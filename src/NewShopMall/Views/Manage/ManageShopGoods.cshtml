@@ -5,7 +5,8 @@
 <h2>Goods</h2>
 
 <!--КНОПКА СОЗДАНИЯ ПОЗИЦИИ-->
-<a asp-controller="Manage" asp-action="CreateGood">Новая позиция</a>
+<a class="btn btn-primary" role="button" asp-controller="Manage" asp-action="CreateGood" >Новая позиция</a>
+<!--<a asp-controller="Manage" asp-action="CreateGood">Новая позиция</a>-->
 
 <ul>
     @foreach (var good in ViewBag.Goods)
