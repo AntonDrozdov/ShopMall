@@ -7,7 +7,7 @@
 <form asp-controller="ManageController" asp-action="CreateGood" method="post" class="form-horizontal" role="form">
     <h4>Добавить товар</h4>
     <hr />
-    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <!--<div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>-->
     
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label">Наименование</label>
@@ -25,8 +25,15 @@
         </div>
     </div>
 
-
     @Component.Invoke("AllCategories")
+
+    <div class="form-group">
+        <label asp-for="Image" class="col-md-2 control-label">Изображение</label>
+        <div class="col-md-10">
+            <textarea asp-for="Image" class="form-control"></textarea>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

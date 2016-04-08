@@ -6,14 +6,16 @@
             var parent = $(this).parent().parent().prev().html();
             var spanbeg = parent.indexOf('<');
             //вырезаем слово родительской категории и соединяем его с названием дочерней категории  
-            $("#CurrentCatLabel").html(parent.substring(0, spanbeg) + "/ " + $(this).html());
-            $("#CurrentCatInput").val(parent.substring(0, spanbeg) + "/ " + $(this).html());
+            var tmp = parent.substring(0, spanbeg).trim() + "/ " + $(this).html();
+            tmp = tmp.trim();
+
+            $("#CurrentCatInput").val(tmp);
             return;
         });
     });
     jQuery(document).ready(function () {
         $(".cat").click(function () {
-            $("#CurrentCat").html($(this).html());
+            $("#CurrentCatInput").val($(this).html());
             return;
         });
     });
@@ -49,16 +51,14 @@
                     </ul>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-2">
-            <label style="padding:30px;">Текущая категория:</label>
-            <!--
-            <label asp-for="Category" id="CurrentCatLabel"></label>
-            <span asp-validation-for="Category" class="text-danger"></span>-->
         </div>
-        <div class="col-md-3">
-                <input asp-for="Category" class="form-control" id="CurrentCatInput" readonly="readonly" />
+       
+         <div class="col-md-3">
+            <label style="padding-top:20px;">Текущая категория:</label><br />
+             <span asp-validation-for="Category" class="text-danger"></span>
+            <input asp-for="Category" class="form-control" id="CurrentCatInput" readonly="readonly" />
+            
         </div>
     </div>
 
