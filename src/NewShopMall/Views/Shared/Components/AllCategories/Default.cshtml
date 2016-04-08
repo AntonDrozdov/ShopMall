@@ -1,0 +1,64 @@
+﻿@model CreateGoodViewModel
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $(".nestedcat").click(function () {
+            var parent = $(this).parent().parent().prev().html();
+            var spanbeg = parent.indexOf('<');
+            //вырезаем слово родительской категории и соединяем его с названием дочерней категории  
+            $("#CurrentCatLabel").html(parent.substring(0, spanbeg) + "/ " + $(this).html());
+            $("#CurrentCatInput").val(parent.substring(0, spanbeg) + "/ " + $(this).html());
+            return;
+        });
+    });
+    jQuery(document).ready(function () {
+        $(".cat").click(function () {
+            $("#CurrentCat").html($(this).html());
+            return;
+        });
+    });
+</script>
+
+
+    <div class="form-group">
+
+        <label class="col-md-2 control-label">Категории</label>
+
+        <div class="col-md-2">
+            <div class="btn-group-vertical">
+                <div class="btn-group">
+                    <button id="btnGroupVerticalDrop1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        Автомобили
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop1">
+                        <li><a class="nestedcat">Новые</a></li>
+                        <li><a class="nestedcat">Б/У</a></li>
+                    </ul>
+                </div>
+                <a class="cat btn btn-default " role="button">Игрушки</a>
+                <a class="cat btn btn-default" role="button">Для животных</a>
+                <div class="btn-group">
+                    <button id="btnGroupVerticalDrop1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        Одежда
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop1">
+                        <li><a class="nestedcat">Мужская</a></li>
+                        <li><a class="nestedcat">Женская</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <label style="padding:30px;">Текущая категория:</label>
+            <!--
+            <label asp-for="Category" id="CurrentCatLabel"></label>
+            <span asp-validation-for="Category" class="text-danger"></span>-->
+        </div>
+        <div class="col-md-3">
+                <input asp-for="Category" class="form-control" id="CurrentCatInput" readonly="readonly" />
+        </div>
+    </div>
+

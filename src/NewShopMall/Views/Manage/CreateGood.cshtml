@@ -25,27 +25,8 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Description" class="col-md-2 control-label">Категории</label>
-        <div class="col-md-10">
-            <div class="btn-group-vertical">
-                <a class="btn btn-default" role="button" asp-controller="Manage" asp-action="ManageShopGoods">Новая позиция</a>
-                <button type="button" class = "btn btn-default" asp-controller="Manage" asp-action="ManageShopGoods">Edit Shop</button>
-                <button type="button" class = "btn btn-default">asdf</button>
-                <button type="button" class = "btn btn-default">asdf</button>
-                <div class="btn-group">
-                    <button id="btnGroupVerticalDrop1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        Dropdown
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop1">
-                        <li><a href="#">Dropdown ссылка</a></li>
-                        <li><a href="#">Dropdown ссылка</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>    
+
+    @Component.Invoke("AllCategories")
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

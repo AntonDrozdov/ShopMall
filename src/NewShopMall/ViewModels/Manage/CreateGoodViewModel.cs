@@ -18,5 +18,8 @@ namespace ShopMall.ViewModels.Manage
         [StringLength(3000, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Поле должно быть установлено")]
+        public string Category { get; set; }
     }
 }
