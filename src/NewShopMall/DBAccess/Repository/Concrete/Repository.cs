@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Http;
+
 using ShopMall.DBAccess.DBContexts;
 using ShopMall.DBAccess.Repository.Abstract;
 using ShopMall.Models.ShopMallDBModels;
@@ -18,6 +20,13 @@ namespace ShopMall.DBAccess.Repository.Concrete
 
         public Repository(ApplicationDbContext _ctx) {
             ctx = _ctx;
+        }
+
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
 
         public virtual void Dispose(bool disposing)
@@ -55,6 +64,11 @@ namespace ShopMall.DBAccess.Repository.Concrete
             return shop.Id;
         }
 
+        public void SaveImage(Image item)
+        {
+            ctx.Images.Add(item);
+            ctx.SaveChanges();
+        }
 
         public IQueryable<Good> ShopGoods(int ShopId) {
             //получаем список ид товаров магазина из объектов RelShopGood поля Goods, что есть связующие объекты между таблицей магазинов и таблицей товаров
@@ -66,12 +80,28 @@ namespace ShopMall.DBAccess.Repository.Concrete
             //выбираем из таблицы товаров все, ид которых, содержаться в вышеопределенной коллекции необходимых ид
             return ctx.Goods.Where(g => ShopGoodsIds.Contains(g.Id));
         }
-        public Good CreateShopGood(Good good, Shop shop) {
-            //сналча добавляем новый товар в таблицу
+        public Good CreateShopGood(Good good, Shop shop, ICollection<IFormFile> newimages) {
+            Good newgood = good;
+            //сначала добавляем картинки в бд и тут же в коллекцию изображений товара
+            List<Image> uploadimages = new List<Image>();
+            foreach (IFormFile im in newimages)
+            {
+                Image newim = new Image();
+                newim.Id = 0; newim.IsMain = true; newim.Description = ""; newim.ImageMimeType = im.ContentType;
+                using (var reader = new StreamReader(im.OpenReadStream()))
+                {
+                    string contentAsString = reader.ReadToEnd();
+                    newim.ImageContent = GetBytes(contentAsString);
+                }
+                SaveImage(newim);
+                newgood.Images.Add(newim);
+            }
+
+            //добавляем новый товар в таблицу
             ctx.Goods.Add(good);
             ctx.SaveChanges();
 
-            //теперь создаем обхект связку товар - магазин
+            //теперь создаем обхъкт связку товар - магазин
             RelShopGood rsg = new RelShopGood() { Good = good, GoodId = good.Id, Shop = shop, ShopId = shop.Id };
             //добавляем объект связку в товар
             good.Shops.Add(rsg);

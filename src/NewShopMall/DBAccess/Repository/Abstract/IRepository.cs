@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopMall.Models.ShopMallDBModels;
 using ShopMall.Models.AccountDBModels;
+using Microsoft.AspNet.Http;
 
 namespace ShopMall.DBAccess.Repository.Abstract
 {
@@ -15,7 +16,8 @@ namespace ShopMall.DBAccess.Repository.Abstract
         Shop GetUserShop(ApplicationUser User);
         int AddUserShop(Shop shop);
 
-        Good CreateShopGood(Good good, Shop shop);
+        void SaveImage(Image item);
+        Good CreateShopGood(Good good, Shop shop, ICollection<IFormFile> newimages);
         
         
     }

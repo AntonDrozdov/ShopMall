@@ -42,5 +42,7 @@ namespace ShopMall.Controllers
             _logger = loggerFactory.CreateLogger<ManageController>();
             _repository = repository;
         }
+
+
     }
 }

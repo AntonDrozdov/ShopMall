@@ -6,7 +6,7 @@
             var parent = $(this).parent().parent().prev().html();
             var spanbeg = parent.indexOf('<');
             //вырезаем слово родительской категории и соединяем его с названием дочерней категории  
-            var tmp = parent.substring(0, spanbeg).trim() + "/ " + $(this).html();
+            var tmp = parent.substring(0, spanbeg).trim() + "/" + $(this).html();
             tmp = tmp.trim();
 
             $("#CurrentCatInput").val(tmp);
@@ -56,7 +56,7 @@
        
          <div class="col-md-3">
             <label style="padding-top:20px;">Текущая категория:</label><br />
-             <span asp-validation-for="Category" class="text-danger"></span>
+            <span asp-validation-for="Category" class="text-danger"></span>
             <input asp-for="Category" class="form-control" id="CurrentCatInput" readonly="readonly" />
             
         </div>

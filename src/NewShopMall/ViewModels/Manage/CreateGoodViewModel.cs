@@ -23,10 +23,7 @@ namespace ShopMall.ViewModels.Manage
         [StringLength(100, ErrorMessage = "Выберете категорию", MinimumLength = 5)]
         public string Category { get; set; }
 
-        [Required]
-        [StringLength(3000, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.MultilineText)]
-        public string Image { get; set; }
 
+        public byte[] Image { get; set; } 
     }
 }

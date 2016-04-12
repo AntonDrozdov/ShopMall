@@ -10,9 +10,14 @@ using Microsoft.Extensions.Logging;
 using ShopMall.Models;
 using ShopMall.Services;
 using ShopMall.ViewModels.Manage;
+using Microsoft.AspNet.Http;
+
+
+
 
 using ShopMall.Models.AccountDBModels;
 using ShopMall.Models.ShopMallDBModels;
+using System.IO;
 
 namespace ShopMall.Controllers
 {
@@ -43,16 +48,20 @@ namespace ShopMall.Controllers
             return View();
         }
         [HttpPost  ]
-        public IActionResult CreateGood(CreateGoodViewModel model)
+        public IActionResult CreateGood(CreateGoodViewModel model, ICollection<IFormFile> newimages)
         {
             if (ModelState.IsValid) {
+                //тек пользователь
                 var currentUser = _repository.GetCurrentUser(User.Identity.Name);
+                
+                //соответсвующий магазин
                 Shop shop = new Shop();
                 if (currentUser != null)
                     shop = _repository.GetUserShop(currentUser);
 
-                Good newgood = new Good() { Title = model.Title, Description = model.Description };
-                _repository.CreateShopGood(newgood, shop);
+                Good newgood = new Good() { Title = model.Title, Description = model.Description};
+
+                _repository.CreateShopGood(newgood, shop, newimages);
 
                 return RedirectToAction("ManageShopGoods");
             }

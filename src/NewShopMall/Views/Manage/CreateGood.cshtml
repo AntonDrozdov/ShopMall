@@ -4,7 +4,7 @@
 }
 
 <br/> 
-<form asp-controller="ManageController" asp-action="CreateGood" method="post" class="form-horizontal" role="form">
+<form asp-controller="ManageController" asp-action="CreateGood" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
     <h4>Добавить товар</h4>
     <hr />
     <!--<div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>-->
@@ -27,17 +27,34 @@
 
     @Component.Invoke("AllCategories")
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#loadfile").onchange(function () {
+                alert($(this).val());
+                $("#filename").html($(this).val());
+                return;
+            });
+        });
+    </script>
     <div class="form-group">
         <label asp-for="Image" class="col-md-2 control-label">Изображение</label>
-        <div class="col-md-10">
-            <textarea asp-for="Image" class="form-control"></textarea>
-            <span asp-validation-for="Image" class="text-danger"></span>
+        <div class="col-md-2">
+            <a class='btn btn-default' style="height:35px; margin-bottom:5px;">
+                Выберите файл...
+                <input asp-for="Image" type="file" id="loadfile" name="newimages" size="100" 
+                        style ="position:absolute;z-index:2; top:0; left:0;opacity:0; background-color:transparent;color:transparent;" 
+                        onchange='$("#upload-file-info").html($(this).val()); $("#upload-file-info").val($(this).val());'>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <input asp-for="Image" class="form-control" id="upload-file-info" readonly="readonly" />
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-primary">Добавить</button>
+        <div class="col-md-offset-2 col-md-10 text-right">
+            <button type="submit" class="btn btn-primary  col-md-2 " style="5px;margin-top:5px;">Добавить</button>
+            <a class='btn btn-default col-md-2 ' style="margin-left:5px;margin-top:5px;">Отмена</a>
         </div>
     </div>
 </form>

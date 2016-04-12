@@ -18,12 +18,5 @@ namespace ShopMall.Models.ShopMallDBModels
         public byte[] ImageContent { get; set; }
         [HiddenInput(DisplayValue = false)]
         public string ImageMimeType { get; set; }
-
-        public ICollection<Good> Goods { get; set; }
-
-        public Image()
-        {
-            Goods = new List<Good>();
-        }
     }
 }
