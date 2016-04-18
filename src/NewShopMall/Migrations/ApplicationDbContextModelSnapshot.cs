@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 using ShopMall.DBAccess.DBContexts;
 
-namespace ShopMall.Migrations
+namespace NewShopMall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -150,6 +150,20 @@ namespace ShopMall.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ParentCategory");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 100);
+
+                    b.HasKey("Id");
+                });
+
             modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Good", b =>
                 {
                     b.Property<int>("Id")
@@ -157,6 +171,8 @@ namespace ShopMall.Migrations
 
                     b.Property<int?>("Amount")
                         .IsRequired();
+
+                    b.Property<int?>("CategoryId");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -245,6 +261,13 @@ namespace ShopMall.Migrations
                     b.HasOne("ShopMall.Models.ShopMallDBModels.Shop")
                         .WithMany()
                         .HasForeignKey("ShopId");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Good", b =>
+                {
+                    b.HasOne("ShopMall.Models.ShopMallDBModels.Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Image", b =>

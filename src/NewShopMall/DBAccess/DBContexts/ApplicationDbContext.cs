@@ -16,6 +16,7 @@ namespace ShopMall.DBAccess.DBContexts
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Good> Goods {get;set;}
         public DbSet<Image> Images { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

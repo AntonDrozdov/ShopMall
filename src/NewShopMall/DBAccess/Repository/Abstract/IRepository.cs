@@ -16,9 +16,10 @@ namespace ShopMall.DBAccess.Repository.Abstract
         Shop GetUserShop(ApplicationUser User);
         int AddUserShop(Shop shop);
 
+        IQueryable<Category> Categories();
+
         void SaveImage(Image item);
         Good CreateShopGood(Good good, Shop shop, ICollection<IFormFile> newimages);
-        
         
     }
 }

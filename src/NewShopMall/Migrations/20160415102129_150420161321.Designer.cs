@@ -1,25 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using ShopMall.Models;
-
 using ShopMall.DBAccess.DBContexts;
 
-namespace ShopMall.Migrations
+namespace NewShopMall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20160415102129_150420161321")]
+    partial class _150420161321
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-beta8")
+                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
@@ -52,7 +47,8 @@ namespace ShopMall.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -68,7 +64,8 @@ namespace ShopMall.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -83,7 +80,8 @@ namespace ShopMall.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -101,7 +99,7 @@ namespace ShopMall.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("NewShopMall.Models.ApplicationUser", b =>
+            modelBuilder.Entity("ShopMall.Models.AccountDBModels.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -133,7 +131,11 @@ namespace ShopMall.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<int?>("ShopId");
+
                     b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("Urladdress");
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
@@ -149,6 +151,80 @@ namespace ShopMall.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ParentCategory");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 100);
+
+                    b.HasKey("Id");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Good", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("Amount")
+                        .IsRequired();
+
+                    b.Property<int?>("CategoryId");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 3000);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 300);
+
+                    b.HasKey("Id");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("GoodId");
+
+                    b.Property<byte[]>("ImageContent");
+
+                    b.Property<string>("ImageMimeType");
+
+                    b.Property<bool>("IsMain");
+
+                    b.HasKey("Id");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.RelShopGood", b =>
+                {
+                    b.Property<int>("ShopId");
+
+                    b.Property<int>("GoodId");
+
+                    b.HasKey("ShopId", "GoodId");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Shop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+                });
+
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")
@@ -158,14 +234,14 @@ namespace ShopMall.Migrations
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("NewShopMall.Models.ApplicationUser")
+                    b.HasOne("ShopMall.Models.AccountDBModels.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("NewShopMall.Models.ApplicationUser")
+                    b.HasOne("ShopMall.Models.AccountDBModels.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -176,9 +252,41 @@ namespace ShopMall.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId");
 
-                    b.HasOne("NewShopMall.Models.ApplicationUser")
+                    b.HasOne("ShopMall.Models.AccountDBModels.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.AccountDBModels.ApplicationUser", b =>
+                {
+                    b.HasOne("ShopMall.Models.ShopMallDBModels.Shop")
+                        .WithMany()
+                        .HasForeignKey("ShopId");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Good", b =>
+                {
+                    b.HasOne("ShopMall.Models.ShopMallDBModels.Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Image", b =>
+                {
+                    b.HasOne("ShopMall.Models.ShopMallDBModels.Good")
+                        .WithMany()
+                        .HasForeignKey("GoodId");
+                });
+
+            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.RelShopGood", b =>
+                {
+                    b.HasOne("ShopMall.Models.ShopMallDBModels.Good")
+                        .WithMany()
+                        .HasForeignKey("GoodId");
+
+                    b.HasOne("ShopMall.Models.ShopMallDBModels.Shop")
+                        .WithMany()
+                        .HasForeignKey("ShopId");
                 });
         }
     }

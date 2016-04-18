@@ -15,31 +15,18 @@ namespace ShopMall.Models.ShopMallDBModels
         public int Id { get; set; }
 
         [Required]
-        [StringLength(300)]
+        [StringLength(100)]
         public string Title { get; set; }
 
         [Required]
-        [StringLength(3000)]
-        [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
+        public int ParentCategory { get; set; }
 
-        public byte[] Image { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        public string ImageMimeType { get; set; }
-
-
-        public ICollection<Category> ParentCategories { get; set; }
-        public ICollection<Category> ChildCategories { get; set; }
-        public ICollection<CategoryType> CategoryTypes { get; set; }
         public ICollection<Good> Goods { get; set; }
+
         public Category()
         {
-            Image = new byte[0];
             Goods = new List<Good>();
-            CategoryTypes = new List<CategoryType>();
-            ParentCategories = new List<Category>();
-            ChildCategories = new List<Category>();
         }
+
     }
 }

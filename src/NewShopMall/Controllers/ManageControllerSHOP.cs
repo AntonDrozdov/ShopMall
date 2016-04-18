@@ -59,7 +59,7 @@ namespace ShopMall.Controllers
                 if (currentUser != null)
                     shop = _repository.GetUserShop(currentUser);
 
-                Good newgood = new Good() { Title = model.Title, Description = model.Description};
+                Good newgood = new Good() { Title = model.Title, Description = model.Description, CategoryId = Convert.ToInt32(model.Category)};
 
                 _repository.CreateShopGood(newgood, shop, newimages);
 

@@ -16,6 +16,7 @@ namespace ShopMall.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
+            ViewBag.Categories = _repository.Categories().ToList();
             return View();
         }
     }
