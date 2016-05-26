@@ -10,16 +10,21 @@ namespace ShopMall.DBAccess.Repository.Abstract
 {
     public interface IRepository
     {
+            //SHOPINFO
         IQueryable<Shop> Shops();
+        IQueryable<Good> ShopGoodsFullInformation(int ShopId);
         IQueryable<Good> ShopGoods(int ShopId);
+            //USERS
         ApplicationUser GetCurrentUser(string UserEmail);
         Shop GetUserShop(ApplicationUser User);
         int AddUserShop(Shop shop);
-
+            //CATEGORIES
         IQueryable<Category> Categories();
-
+            //IMAGE
         void SaveImage(Image item);
+            //GOODS
         Good CreateShopGood(Good good, Shop shop, ICollection<IFormFile> newimages);
-        
+        Good GetGood(int? Id);
+
     }
 }

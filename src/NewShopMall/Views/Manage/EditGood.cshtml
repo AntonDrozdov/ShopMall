@@ -4,7 +4,7 @@
 }
 
 <br/> 
-<form asp-controller="ManageController" asp-action="CreateGood" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+<form asp-controller="ManageController" asp-action="EditGood"  method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
     <h4>Добавить товар</h4>
     <hr />
     <!--<div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>-->
@@ -20,18 +20,17 @@
     <div class="form-group">
         <label asp-for="Description" class="col-md-2 control-label">Описание</label>
         <div class="col-md-10">
-            <textarea asp-for="Description" class="form-control" ></textarea>
+            <textarea asp-for="Description" class="form-control" style = "resize:vertical;"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
 
-    @Component.Invoke("AllCategories")
+    @Component.Invoke("AllCategories", Model)
 
     <script type="text/javascript">
         $(document).ready(function () {
             $("#loadfile").onchange(function () {
-                alert($(this).val());
-                $("#filename").html($(this).val());
+                 $("#filename").html($(this).val());
                 return;
             });
         });
@@ -53,7 +52,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10 text-right">
-            <button type="submit" class="btn btn-primary  col-md-2 " style="margin-top:5px;">Добавить</button>
+            <button type="submit" class="btn btn-primary  col-md-2 " style="margin-top:5px;">Изменить</button>
             <a class='btn btn-default col-md-2 ' style="margin-left:5px;margin-top:5px;">Отмена</a>
         </div>
     </div>

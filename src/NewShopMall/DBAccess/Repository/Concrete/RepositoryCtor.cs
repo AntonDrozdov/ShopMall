@@ -15,12 +15,12 @@ namespace ShopMall.DBAccess.Repository.Concrete
 {
     public partial class Repository : IRepository
     {
-        private ApplicationDbContext ctx;
+        private ApplicationDbContext _ctx;
         private bool disposing = false;
 
-        public Repository(ApplicationDbContext _ctx)
+        public Repository(ApplicationDbContext ctx)
         {
-            ctx = _ctx;
+            _ctx = ctx;
         }
 
         public virtual void Dispose(bool disposing)
@@ -29,7 +29,7 @@ namespace ShopMall.DBAccess.Repository.Concrete
             {
                 if (disposing)
                 {
-                    this.ctx.Dispose();
+                    this._ctx.Dispose();
                 }
             }
             this.disposing = true;

@@ -18,8 +18,8 @@ namespace ShopMall.Models.ShopMallDBModels
         [StringLength(100)]
         public string Title { get; set; }
 
-        [Required]
-        public int ParentCategory { get; set; }
+        public int? CategoryId { get; set; }
+        public Category ParentCategory { get; set; }
 
         public ICollection<Good> Goods { get; set; }
 

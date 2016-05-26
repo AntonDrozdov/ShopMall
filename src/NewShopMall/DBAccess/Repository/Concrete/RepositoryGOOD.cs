@@ -10,18 +10,6 @@ namespace ShopMall.DBAccess.Repository.Concrete
 {
     public partial class Repository : IRepository
     {
-        public IQueryable<Good> ShopGoods(int ShopId)
-        {
-            //получаем список ид товаров магазина из объектов RelShopGood поля Goods, что есть связующие объекты между таблицей магазинов и таблицей товаров
-            List<int> ShopGoodsIds = new List<int>();
-            foreach (RelShopGood rsg in ctx.Shops.Where(s => s.Id == ShopId).FirstOrDefault().Goods)
-            {
-                ShopGoodsIds.Add(rsg.GoodId);
-            }
-
-            //выбираем из таблицы товаров все, ид которых, содержаться в вышеопределенной коллекции необходимых ид
-            return ctx.Goods.Where(g => ShopGoodsIds.Contains(g.Id));
-        }
         public Good CreateShopGood(Good good, Shop shop, ICollection<IFormFile> newimages)
         {
             Good newgood = good;
@@ -41,17 +29,21 @@ namespace ShopMall.DBAccess.Repository.Concrete
             }
 
             //добавляем новый товар в таблицу
-            ctx.Goods.Add(good);
-            ctx.SaveChanges();
+            _ctx.Goods.Add(good);
+            _ctx.SaveChanges();
 
             //теперь создаем обхъкт связку товар - магазин
             RelShopGood rsg = new RelShopGood() { Good = good, GoodId = good.Id, Shop = shop, ShopId = shop.Id };
             //добавляем объект связку в товар
             good.Shops.Add(rsg);
             //созраняемся
-            ctx.Entry(good).State = EntityState.Modified;
-            ctx.SaveChanges();
+            _ctx.Entry(good).State = EntityState.Modified;
+            _ctx.SaveChanges();
             return good;
+        }
+        public Good GetGood(int? Id)
+        {
+            return _ctx.Goods.Where(g => g.Id == Id).Include(g => g.Category).Include(g => g.Category.ParentCategory).FirstOrDefault();
         }
     }
 }

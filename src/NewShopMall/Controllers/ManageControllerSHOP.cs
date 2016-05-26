@@ -24,7 +24,6 @@ namespace ShopMall.Controllers
     [Authorize]
     public partial class ManageController : Controller
     {
-
         [HttpGet]
         public IActionResult ManageShopGoods()
         {
@@ -34,7 +33,7 @@ namespace ShopMall.Controllers
        
                 var Shop   = _repository.GetUserShop(currentUser);
        
-                ViewBag.Goods = _repository.ShopGoods(Shop.Id).ToList();
+                ViewBag.Goods = _repository.ShopGoodsFullInformation(Shop.Id).ToList();
             }
             else {
                 Redirect("/");
@@ -48,7 +47,7 @@ namespace ShopMall.Controllers
             return View();
         }
         [HttpPost  ]
-        public IActionResult CreateGood(CreateGoodViewModel model, ICollection<IFormFile> newimages)
+        public IActionResult CreateGood(CreateEditGoodViewModel model, ICollection<IFormFile> newimages)
         {
             if (ModelState.IsValid) {
                 //тек пользователь
@@ -59,7 +58,7 @@ namespace ShopMall.Controllers
                 if (currentUser != null)
                     shop = _repository.GetUserShop(currentUser);
 
-                Good newgood = new Good() { Title = model.Title, Description = model.Description, CategoryId = Convert.ToInt32(model.Category)};
+                Good newgood = new Good() { Title = model.Title, Description = model.Description, CategoryId = Convert.ToInt32(model.CategoryId)};
 
                 _repository.CreateShopGood(newgood, shop, newimages);
 
@@ -67,6 +66,71 @@ namespace ShopMall.Controllers
             }
             return RedirectToAction("ManageShopGoods");
         }
+        [HttpGet]
+        public ActionResult EditGood(int? id)
+        {
+            if (id == null) return HttpNotFound();
+
+            Good good = _repository.GetGood(id);
+            if (good != null)
+            {
+                string Category = good.Category.ParentCategory.Title + "/" + good.Category.Title;
+                return View(new CreateEditGoodViewModel { Id = good.Id, Title = good.Title, Description = good.Description, Category = Category, Images = good.Images });
+            }
+
+            return RedirectToAction("GoodsList");
+        }
+        [HttpPost]
+        public ActionResult EditGood(CreateEditGoodViewModel model, ICollection<IFormFile> newimages)
+        {
+            if (ModelState.IsValid)
+            {
+                //тек пользователь
+                var currentUser = _repository.GetCurrentUser(User.Identity.Name);
+
+                //соответсвующий магазин
+                Shop shop = new Shop();
+                if (currentUser != null)
+                    shop = _repository.GetUserShop(currentUser);
+
+                Good newgood = new Good() { Title = model.Title, Description = model.Description, CategoryId = Convert.ToInt32(model.Category) };
+
+                _repository.CreateShopGood(newgood, shop, newimages);
+
+                return RedirectToAction("ManageShopGoods");
+            }
+            return RedirectToAction("ManageShopGoods");
+
+        }
+        [HttpGet]
+        public ActionResult DeleteGood(int? id)
+        {
+            //
+            //if (id == null) return HttpNotFound();
+
+            //Good good = repository.FindGood(id);
+
+            //if (good == null) return HttpNotFound();
+
+            //return PartialView("PartialDeleteGood", good);
+            return View();
+
+        }
+        [HttpPost, ActionName("DeleteGood")]
+        public ActionResult DeleteGoodConfirmed(int? id)
+        {
+            //if (id == null) return HttpNotFound();
+
+            //Good good = repository.FindGood(id);
+
+            //if (good == null) return HttpNotFound();
+
+            //repository.DeleteGood(good);
+
+            //return RedirectToAction("GoodsList");
+            return View();
+        }
+
 
 
         public IActionResult ManageShopSales()

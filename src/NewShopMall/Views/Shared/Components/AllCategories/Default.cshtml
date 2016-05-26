@@ -1,11 +1,12 @@
-﻿@model CreateGoodViewModel
+﻿@model CreateEditGoodViewModel
 
 <script type="text/javascript">
-    jQuery(document).ready(function () {
+
+    $(document).ready(function () {
         $(".nestedcat").click(function () {
             var parent = $(this).parent().parent().prev().html();
             var spanbeg = parent.indexOf('<');
-            //вырезаем слово родительской категории и соединяем его с названием дочерней категории  
+            //вырезаем слово родительской категории и соединяем его с названием дочерней категории
             var tmp = parent.substring(0, spanbeg).trim() + "/" + $(this).html();
             tmp = tmp.trim();
 
@@ -14,12 +15,15 @@
             return;
         });
     });
-    jQuery(document).ready(function () {
+
+    $(document).ready(function () {
         $(".cat").click(function () {
             $("#CurrentCatName").val($(this).html());
             $("#CurrentCatId").val($(this).attr('id'));
             return;
         });
+
+
     });
 </script>
 
@@ -28,15 +32,15 @@
 
         <label class="col-md-2 control-label">Категории</label>
 
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="btn-group-vertical">
                 @foreach (var topcat in ViewBag.Categories)
                 {
-                    if (topcat.ParentCategory == 0)
+                    if (topcat.CategoryId == null)
                     {
                         bool IsParent = false;
                         @foreach (var cat in ViewBag.Categories){
-                            @if (cat.ParentCategory == topcat.Id){
+                            @if (cat.CategoryId== topcat.Id){
                                 IsParent = true;
                                 break;
                             }
@@ -49,7 +53,7 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop">
                                 @foreach (var chcat in ViewBag.Categories){
-                                    @if (chcat.ParentCategory == topcat.Id){
+                                    @if (chcat.CategoryId == topcat.Id){
                                         <li><a class="nestedcat" role="button" id="@chcat.Id">@chcat.Title</a></li>
                                     }
                                 }
@@ -68,8 +72,10 @@
          <div class="col-md-3">
             <label style="padding-top:20px;">Текущая категория:</label><br />
             <span asp-validation-for="Category" class="text-danger"></span>
-            <input class="form-control" id="CurrentCatName" readonly="readonly" />
-            <input asp-for="Category" type ="hidden" class="form-control" id="CurrentCatId" readonly="readonly" />
+            <!--<input class="form-control" id="CurrentCatName" readonly="readonly"/>-->
+             
+            <input asp-for="Category" class="form-control" id="CurrentCatName"  readonly="readonly" />
+            <input asp-for="CategoryId" type ="hidden" class="form-control" id="CurrentCatId" readonly="readonly" />
         </div>
     </div>
 

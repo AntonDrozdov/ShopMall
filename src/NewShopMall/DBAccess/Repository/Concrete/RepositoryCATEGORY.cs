@@ -7,7 +7,7 @@ namespace ShopMall.DBAccess.Repository.Concrete
     public partial class Repository : IRepository
     {
         public IQueryable<Category> Categories() {
-            return ctx.Categories;
+            return _ctx.Categories;
         }
     }
 }

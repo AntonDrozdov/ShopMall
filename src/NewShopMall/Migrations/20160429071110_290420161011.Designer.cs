@@ -8,9 +8,10 @@ using ShopMall.DBAccess.DBContexts;
 namespace NewShopMall.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160429071110_290420161011")]
+    partial class _290420161011
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -155,7 +156,7 @@ namespace NewShopMall.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("ParentCategory");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -261,13 +262,6 @@ namespace NewShopMall.Migrations
                     b.HasOne("ShopMall.Models.ShopMallDBModels.Shop")
                         .WithMany()
                         .HasForeignKey("ShopId");
-                });
-
-            modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Category", b =>
-                {
-                    b.HasOne("ShopMall.Models.ShopMallDBModels.Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("ShopMall.Models.ShopMallDBModels.Good", b =>
